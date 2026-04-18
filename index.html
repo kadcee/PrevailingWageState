@@ -51,6 +51,17 @@
     font-weight: 500;
     color: #633806;
   }
+  #tt-lock-hint {
+    margin-top: 8px;
+    font-size: 10px;
+    color: #aaa;
+    text-align: center;
+  }
+  #tooltip.locked {
+    pointer-events: auto;
+    border-color: #a32d2d;
+  }
+  #tooltip.locked #tt-lock-hint { color: #a32d2d; }
   .footer-note { font-size: 11px; color: #999; margin-top: 1rem; }
 </style>
 </head>
@@ -72,6 +83,7 @@
   <div id="tt-law"></div>
   <div id="tt-details"></div>
   <div id="tt-honeywell"></div>
+  <div id="tt-lock-hint">Click state to pin · Click again to unpin</div>
 </div>
 
 <p class="footer-note">Data reflects general state law landscape as of 2024. Consult official state agency sources for current thresholds and determinations.</p>
@@ -155,6 +167,9 @@ const ttLaw      = document.getElementById('tt-law');
 const ttDetails  = document.getElementById('tt-details');
 const ttHoney    = document.getElementById('tt-honeywell');
 
+let locked = false;
+let lockedState = null;
+
 function positionTooltip(cx, cy) {
   tt.style.display = 'block';
   tt.style.visibility = 'hidden';
@@ -168,7 +183,16 @@ function positionTooltip(cx, cy) {
     tt.style.left = left + 'px';
     tt.style.top  = top  + 'px';
     tt.style.visibility = 'visible';
+    document.getElementById('map').addEventListener('click', function(e) {
+    if (e.target.tagName !== 'path' && locked) {
+      locked = false;
+      lockedState = null;
+      tt.classList.remove('locked');
+      tt.style.display = 'none';
+      d3.selectAll('path').attr('opacity', 1);
+    }
   });
+});
 }
 
 function populateTooltip(name) {
@@ -227,15 +251,37 @@ d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
     .attr('fill', d => { const i = stateData[d.properties.name]; return i ? tierColor[i.tier] : '#b4b2a9'; })
     .attr('cursor', 'pointer')
     .on('mouseenter', function(event, d) {
+      if (locked) return;
       const name = d.properties.name;
       if (!populateTooltip(name)) return;
       d3.select(this).attr('opacity', 0.75);
       const c = centroids[name];
       if (c) { const cl = svgCentroidToClient(c[0], c[1]); positionTooltip(cl.x, cl.y); }
     })
-    .on('mouseleave', function() {
+    .on('mouseleave', function(event, d) {
+      if (locked) return;
       d3.select(this).attr('opacity', 1);
       tt.style.display = 'none';
+    })
+    .on('click', function(event, d) {
+      const name = d.properties.name;
+      if (locked && lockedState === name) {
+        locked = false;
+        lockedState = null;
+        tt.classList.remove('locked');
+        tt.style.display = 'none';
+        d3.selectAll('path').attr('opacity', 1);
+      } else {
+        locked = true;
+        lockedState = name;
+        d3.selectAll('path').attr('opacity', 1);
+        d3.select(this).attr('opacity', 0.75);
+        if (!populateTooltip(name)) return;
+        tt.classList.add('locked');
+        const c = centroids[name];
+        if (c) { const cl = svgCentroidToClient(c[0], c[1]); positionTooltip(cl.x, cl.y); }
+      }
+      event.stopPropagation();
     });
 
   svg.selectAll('text.lbl')
