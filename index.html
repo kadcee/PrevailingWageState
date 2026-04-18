@@ -30,38 +30,27 @@
     background: #fff;
     border: 0.5px solid #ccc;
     border-radius: 10px;
-    padding: 12px 14px;
-    width: 320px;
+    padding: 14px 16px;
+    max-width: 310px;
     pointer-events: none;
     box-shadow: 0 2px 12px rgba(0,0,0,0.10);
   }
-  #tt-state { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 5px; }
-  #tt-law { font-size: 11px; font-weight: 500; margin-bottom: 7px; padding: 2px 7px; border-radius: 4px; display: inline-block; }
-  #tt-details { font-size: 11px; color: #555; display: grid; grid-template-columns: 72px 1fr; gap: 3px 8px; align-items: start; }
-  #tt-details span:nth-child(odd) { font-weight: 500; color: #888; padding-top: 1px; }
-  #tt-details span:nth-child(even) { color: #1a1a1a; word-break: break-word; }
+  #tt-state { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 6px; }
+  #tt-law { font-size: 12px; font-weight: 500; margin-bottom: 8px; padding: 3px 8px; border-radius: 4px; display: inline-block; }
+  #tt-details { font-size: 12px; color: #555; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; }
+  #tt-details span:nth-child(odd) { font-weight: 500; color: #888; white-space: nowrap; }
+  #tt-details span:nth-child(even) { color: #1a1a1a; }
   #tt-honeywell {
     display: none;
-    margin-top: 8px;
-    padding: 5px 8px;
+    margin-top: 10px;
+    padding: 6px 10px;
     border-radius: 4px;
     background: #fff3e0;
     border: 0.5px solid #e88c2a;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     color: #633806;
   }
-  #tt-lock-hint {
-    margin-top: 8px;
-    font-size: 10px;
-    color: #aaa;
-    text-align: center;
-  }
-  #tooltip.locked {
-    pointer-events: auto;
-    border-color: #a32d2d;
-  }
-  #tooltip.locked #tt-lock-hint { color: #a32d2d; }
   .footer-note { font-size: 11px; color: #999; margin-top: 1rem; }
 </style>
 </head>
@@ -83,7 +72,6 @@
   <div id="tt-law"></div>
   <div id="tt-details"></div>
   <div id="tt-honeywell"></div>
-  <div id="tt-lock-hint">Click state to pin · Click again to unpin</div>
 </div>
 
 <p class="footer-note">Data reflects general state law landscape as of 2024. Consult official state agency sources for current thresholds and determinations.</p>
@@ -100,57 +88,57 @@ const honeywellNote = {
   "New Jersey":"Honeywell Tech covered",
   "Minnesota":"Honeywell Tech covered",
   "Massachusetts":"Honeywell Tech covered",
-  "Colorado":"Honeywell Tech covered (City of Denver only)"
+  "Colorado":"Honeywell Tech covered (City & County of Denver only)"
 };
 
 const stateData = {
   "Alabama":{ tier:"none", abbr:"AL", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
-  "Alaska":{ tier:"comprehensive", abbr:"AK", law:"Alaska Wage and Hour Act (AS 36.05)", agency:"Alaska Dept. of Labor & Workforce Dev.", covered:"Construction, public works", threshold:"All public construction contracts", url:"https://labor.alaska.gov/lss/pwprog.htm" },
+  "Alaska":{ tier:"comprehensive", abbr:"AK", law:"Alaska Wage and Hour Act (AS 36.05)", agency:"Alaska Dept. of Labor & Workforce Dev.", covered:"Construction, public works", threshold:"All public construction contracts", url:"https://labor.alaska.gov" },
   "Arizona":{ tier:"none", abbr:"AZ", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Arkansas":{ tier:"none", abbr:"AR", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
-  "California":{ tier:"comprehensive", abbr:"CA", law:"CA Prevailing Wage Law (Labor Code §1720+)", agency:"CA Dept. of Industrial Relations (DIR)", covered:"Public works construction & maintenance", threshold:"$1,000+ construction; $25,000+ alterations", url:"https://www.dir.ca.gov/dlse/DLSEPrevailingWage.htm" },
-  "Colorado":{ tier:"comprehensive", abbr:"CO", law:"Colorado Labor Peace Act / SB21-087", agency:"CO Division of Labor Standards", covered:"State-funded construction projects", threshold:"All state-funded public works", url:"https://cdle.colorado.gov/prevailing-wage" },
-  "Connecticut":{ tier:"comprehensive", abbr:"CT", law:"Connecticut Prevailing Wage Act (CGS §31-53)", agency:"CT Dept. of Labor", covered:"Public works construction", threshold:"$1M+ new; $100K+ renovation", url:"https://www.ctdol.state.ct.us/wgwkstnd/prevwage.htm" },
+  "California":{ tier:"comprehensive", abbr:"CA", law:"CA Prevailing Wage Law (Labor Code §1720+)", agency:"CA Dept. of Industrial Relations (DIR)", covered:"Public works construction & maintenance", threshold:"$1,000+ construction; $25,000+ alterations", url:"https://www.dir.ca.gov/Public-Works/PublicWorks.html" },
+  "Colorado":{ tier:"comprehensive", abbr:"CO", law:"Colorado Labor Peace Act / SB21-087", agency:"CO Division of Labor Standards", covered:"State-funded construction projects", threshold:"All state-funded public works", url:"https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Auditors-Office/Denver-Labor/Prevailing-Wage" },
+  "Connecticut":{ tier:"comprehensive", abbr:"CT", law:"Connecticut Prevailing Wage Act (CGS §31-53)", agency:"CT Dept. of Labor", covered:"Public works construction", threshold:"$1M+ new; $100K+ renovation", url:"https://portal.ct.gov/" },
   "Delaware":{ tier:"comprehensive", abbr:"DE", law:"Delaware Prevailing Wage Law (Title 29 Ch. 69)", agency:"DE Dept. of Labor", covered:"Public works construction", threshold:"$500,000+ new construction", url:"https://labor.delaware.gov/divisions/industrial-affairs/prevailing-wage/" },
   "Florida":{ tier:"none", abbr:"FL", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Georgia":{ tier:"none", abbr:"GA", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Hawaii":{ tier:"comprehensive", abbr:"HI", law:"Hawaii Prevailing Wage Law (HRS Ch. 104)", agency:"HI Dept. of Labor & Industrial Relations", covered:"Public works construction", threshold:"All state/county public works", url:"https://labor.hawaii.gov/wsd/prevailing-wage/" },
   "Idaho":{ tier:"none", abbr:"ID", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
-  "Illinois":{ tier:"comprehensive", abbr:"IL", law:"Illinois Prevailing Wage Act (820 ILCS 130)", agency:"IL Dept. of Labor", covered:"Public works construction", threshold:"All public works projects", url:"https://labor.illinois.gov/licensing-registration/prevailing-wage" },
+  "Illinois":{ tier:"comprehensive", abbr:"IL", law:"Illinois Prevailing Wage Act (820 ILCS 130)", agency:"IL Dept. of Labor", covered:"Public works construction", threshold:"All public works projects", url:"https://labor.illinois.gov/" },
   "Indiana":{ tier:"none", abbr:"IN", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Iowa":{ tier:"none", abbr:"IA", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Kansas":{ tier:"none", abbr:"KS", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Kentucky":{ tier:"none", abbr:"KY", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Louisiana":{ tier:"none", abbr:"LA", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
-  "Maine":{ tier:"comprehensive", abbr:"ME", law:"Maine Prevailing Wage Law (26 MRS §1301+)", agency:"ME Dept. of Labor", covered:"State highway and public building construction", threshold:"State-funded construction projects", url:"https://www.maine.gov/labor/labor_laws/prevailing_wage.html" },
+  "Maine":{ tier:"comprehensive", abbr:"ME", law:"Maine Prevailing Wage Law (26 MRS §1301+)", agency:"ME Dept. of Labor", covered:"State highway and public building construction", threshold:"State-funded construction projects", url:"https://www.maine.gov/labor/labor_stats/publications/wagerateconst/index.shtml" },
   "Maryland":{ tier:"comprehensive", abbr:"MD", law:"Maryland Prevailing Wage Law (Art. §17-201+)", agency:"MD Dept. of Labor", covered:"Public school construction; state contracts", threshold:"$500,000+ for specified contracts", url:"https://www.labor.maryland.gov/labor/prev/" },
-  "Massachusetts":{ tier:"comprehensive", abbr:"MA", law:"Massachusetts Prevailing Wage Act (MGL Ch. 149)", agency:"MA Dept. of Labor Standards", covered:"Public works construction and maintenance", threshold:"All public agency construction contracts", url:"https://www.mass.gov/prevailing-wages" },
-  "Michigan":{ tier:"limited", abbr:"MI", law:"Michigan Prevailing Wage (reinstated 2023)", agency:"MI Dept. of Labor & Economic Opportunity", covered:"State-funded construction", threshold:"State-funded public works", url:"https://www.michigan.gov/leo/bureaus-agencies/ors/prevailing-wage" },
-  "Minnesota":{ tier:"comprehensive", abbr:"MN", law:"Minnesota Prevailing Wage Act (MN Stat. §177.41+)", agency:"MN Dept. of Labor & Industry", covered:"Public works construction", threshold:"All state-funded construction contracts", url:"https://www.dli.mn.gov/business/employment-practices/prevailing-wage-contractors-and-workers" },
+  "Massachusetts":{ tier:"comprehensive", abbr:"MA", law:"Massachusetts Prevailing Wage Act (MGL Ch. 149)", agency:"MA Dept. of Labor Standards", covered:"Public works construction and maintenance", threshold:"All public agency construction contracts", url:"https://www.mass.gov/prevailing-wage-program" },
+  "Michigan":{ tier:"limited", abbr:"MI", law:"Michigan Prevailing Wage (reinstated 2023)", agency:"MI Dept. of Labor & Economic Opportunity", covered:"State-funded construction", threshold:"State-funded public works", url:"https://www.michigan.gov/leo/bureaus-agencies/ber/wage-and-hour/prevailing-wage" },
+  "Minnesota":{ tier:"comprehensive", abbr:"MN", law:"Minnesota Prevailing Wage Act (MN Stat. §177.41+)", agency:"MN Dept. of Labor & Industry", covered:"Public works construction", threshold:"All state-funded construction contracts", url:"https://www.dli.mn.gov/prevailing-wage" },
   "Mississippi":{ tier:"none", abbr:"MS", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Missouri":{ tier:"limited", abbr:"MO", law:"Missouri Prevailing Wage Law (RSMo §290.210+)", agency:"MO Dept. of Labor & Industrial Relations", covered:"Public works construction", threshold:"Projects over $75,000", url:"https://labor.mo.gov/DLS/PrevailingWage" },
-  "Montana":{ tier:"comprehensive", abbr:"MT", law:"Montana Prevailing Wage Law (MCA §18-2-401+)", agency:"MT Dept. of Labor & Industry", covered:"Public works construction and maintenance", threshold:"All state/local public construction projects", url:"https://erd.dli.mt.gov/labor-standards/prevailing-wage" },
+  "Montana":{ tier:"comprehensive", abbr:"MT", law:"Montana Prevailing Wage Law (MCA §18-2-401+)", agency:"MT Dept. of Labor & Industry", covered:"Public works construction and maintenance", threshold:"All state/local public construction projects", url:"https://erd.dli.mt.gov/" },
   "Nebraska":{ tier:"none", abbr:"NE", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
-  "Nevada":{ tier:"comprehensive", abbr:"NV", law:"Nevada Prevailing Wage Law (NRS Ch. 338)", agency:"NV Office of the Labor Commissioner", covered:"Public works construction", threshold:"$100,000+ new; $25,000+ alterations", url:"https://labor.nv.gov/Employer/Prevailing_Wage/Prevailing_Wage_Main/" },
+  "Nevada":{ tier:"comprehensive", abbr:"NV", law:"Nevada Prevailing Wage Law (NRS Ch. 338)", agency:"NV Office of the Labor Commissioner", covered:"Public works construction", threshold:"$100,000+ new; $25,000+ alterations", url:"https://labor.nv.gov/" },
   "New Hampshire":{ tier:"none", abbr:"NH", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
-  "New Jersey":{ tier:"comprehensive", abbr:"NJ", law:"New Jersey Prevailing Wage Act (NJSA 34:11-56.25+)", agency:"NJ Dept. of Labor & Workforce Dev.", covered:"Public works construction", threshold:"$16,263+ (indexed annually)", url:"https://www.nj.gov/labor/wagehour/wagehour_sub/prevwage.html" },
-  "New Mexico":{ tier:"comprehensive", abbr:"NM", law:"NM Public Works Minimum Wage Act (NMSA §13-4-11+)", agency:"NM Labor Relations Division", covered:"Public works construction", threshold:"All public works projects", url:"https://www.nmag.gov/attorney-general/ag-office/divisions/civil-bureau/labor-relations-division.aspx" },
-  "New York":{ tier:"comprehensive", abbr:"NY", law:"New York Labor Law Article 8 (§220+)", agency:"NY Dept. of Labor", covered:"Public works construction and maintenance", threshold:"All public works contracts", url:"https://dol.ny.gov/prevailing-wages" },
+  "New Jersey":{ tier:"comprehensive", abbr:"NJ", law:"New Jersey Prevailing Wage Act (NJSA 34:11-56.25+)", agency:"NJ Dept. of Labor & Workforce Dev.", covered:"Public works construction", threshold:"$16,263+ (indexed annually)", url:"https://www.nj.gov/labor/wageandhour/prevailing-rates/public-works/" },
+  "New Mexico":{ tier:"comprehensive", abbr:"NM", law:"NM Public Works Minimum Wage Act (NMSA §13-4-11+)", agency:"NM Labor Relations Division", covered:"Public works construction", threshold:"All public works projects", url:"https://www.dws.state.nm.us/public-works" },
+  "New York":{ tier:"comprehensive", abbr:"NY", law:"New York Labor Law Article 8 (§220+)", agency:"NY Dept. of Labor", covered:"Public works construction and maintenance", threshold:"All public works contracts", url:"https://dol.ny.gov/bureau-public-work-and-prevailing-wage-enforcement" },
   "North Carolina":{ tier:"none", abbr:"NC", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "North Dakota":{ tier:"none", abbr:"ND", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Ohio":{ tier:"comprehensive", abbr:"OH", law:"Ohio Prevailing Wage Law (ORC §4115.03+)", agency:"OH Dept. of Commerce — Wage & Hour Bureau", covered:"Public improvement construction", threshold:"$250,000+ new; $75,000+ repairs", url:"https://com.ohio.gov/divisions/industrial-compliance/bureaus/bureau-of-wage-hour-administration/prevailing-wage" },
   "Oklahoma":{ tier:"none", abbr:"OK", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
-  "Oregon":{ tier:"comprehensive", abbr:"OR", law:"Oregon Prevailing Wage Law (ORS §279C.800+)", agency:"OR Bureau of Labor & Industries (BOLI)", covered:"Public works construction", threshold:"All public works projects", url:"https://www.oregon.gov/boli/workers/pages/prevailing-wages.aspx" },
-  "Pennsylvania":{ tier:"comprehensive", abbr:"PA", law:"Pennsylvania Prevailing Wage Act (43 PS §165-1+)", agency:"PA Dept. of Labor & Industry", covered:"Public works construction", threshold:"$25,000+", url:"https://www.dli.pa.gov/Individuals/Labor-Management-Relations/llc/prevailing-wage/Pages/default.aspx" },
-  "Rhode Island":{ tier:"comprehensive", abbr:"RI", law:"Rhode Island Prevailing Wages Act (RIGL §37-13-1+)", agency:"RI Dept. of Labor & Training", covered:"Public works construction", threshold:"All public works projects", url:"https://dlt.ri.gov/employers/prevailing-wage" },
+  "Oregon":{ tier:"comprehensive", abbr:"OR", law:"Oregon Prevailing Wage Law (ORS §279C.800+)", agency:"OR Bureau of Labor & Industries (BOLI)", covered:"Public works construction", threshold:"All public works projects", url:"https://www.oregon.gov/boli/employers/Pages/prevailing-wage.aspx" },
+  "Pennsylvania":{ tier:"comprehensive", abbr:"PA", law:"Pennsylvania Prevailing Wage Act (43 PS §165-1+)", agency:"PA Dept. of Labor & Industry", covered:"Public works construction", threshold:"$25,000+", url:"https://www.pa.gov/agencies/dli/resources/compliance-laws-and-regulations/labor-management-relations/labor-law/prevailing-wage" },
+  "Rhode Island":{ tier:"comprehensive", abbr:"RI", law:"Rhode Island Prevailing Wages Act (RIGL §37-13-1+)", agency:"RI Dept. of Labor & Training", covered:"Public works construction", threshold:"All public works projects", url:"https://dlt.ri.gov/regulation-and-safety/prevailing-wage" },
   "South Carolina":{ tier:"none", abbr:"SC", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "South Dakota":{ tier:"none", abbr:"SD", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Tennessee":{ tier:"none", abbr:"TN", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
-  "Texas":{ tier:"limited", abbr:"TX", law:"Texas Government Code Ch. 2258", agency:"TX Dept. of Transportation / local bodies", covered:"Highway and road construction only", threshold:"State highway construction contracts", url:"https://www.txdot.gov/business/contractors-and-suppliers/prevailing-wage-rates.html" },
+  "Texas":{ tier:"limited", abbr:"TX", law:"Texas Government Code Ch. 2258", agency:"TX Dept. of Transportation / local bodies", covered:"Highway and road construction only", threshold:"State highway construction contracts", url:"https://www.dol.gov/agencies/whd" },
   "Utah":{ tier:"none", abbr:"UT", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
-  "Vermont":{ tier:"limited", abbr:"VT", law:"Vermont Prevailing Wage (21 VSA §305a)", agency:"VT Dept. of Labor", covered:"State-funded construction", threshold:"State building and highway projects", url:"https://labor.vermont.gov/prevailing-wage" },
+  "Vermont":{ tier:"limited", abbr:"VT", law:"Vermont Prevailing Wage (21 VSA §305a)", agency:"VT Dept. of Labor", covered:"State-funded construction", threshold:"State building and highway projects", url:"https://labor.vermont.gov/" },
   "Virginia":{ tier:"comprehensive", abbr:"VA", law:"Virginia Prevailing Wage Law (Code §2.2-4321.2+)", agency:"VA Dept. of Labor & Industry", covered:"Public works construction", threshold:"$500,000+", url:"https://www.doli.virginia.gov/prevailing-wage/" },
-  "Washington":{ tier:"comprehensive", abbr:"WA", law:"Washington Prevailing Wage Law (RCW Ch. 39.12)", agency:"WA Dept. of Labor & Industries (L&I)", covered:"Public works construction", threshold:"All public works projects", url:"https://lni.wa.gov/licensing-permits/public-works-projects/prevailing-wage/" },
+  "Washington":{ tier:"comprehensive", abbr:"WA", law:"Washington Prevailing Wage Law (RCW Ch. 39.12)", agency:"WA Dept. of Labor & Industries (L&I)", covered:"Public works construction", threshold:"All public works projects", url:"https://lni.wa.gov" },
   "West Virginia":{ tier:"none", abbr:"WV", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Wisconsin":{ tier:"none", abbr:"WI", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Wyoming":{ tier:"none", abbr:"WY", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" }
@@ -167,9 +155,6 @@ const ttLaw      = document.getElementById('tt-law');
 const ttDetails  = document.getElementById('tt-details');
 const ttHoney    = document.getElementById('tt-honeywell');
 
-let locked = false;
-let lockedState = null;
-
 function positionTooltip(cx, cy) {
   tt.style.display = 'block';
   tt.style.visibility = 'hidden';
@@ -183,16 +168,7 @@ function positionTooltip(cx, cy) {
     tt.style.left = left + 'px';
     tt.style.top  = top  + 'px';
     tt.style.visibility = 'visible';
-    document.getElementById('map').addEventListener('click', function(e) {
-    if (e.target.tagName !== 'path' && locked) {
-      locked = false;
-      lockedState = null;
-      tt.classList.remove('locked');
-      tt.style.display = 'none';
-      d3.selectAll('path').attr('opacity', 1);
-    }
   });
-});
 }
 
 function populateTooltip(name) {
@@ -251,37 +227,15 @@ d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
     .attr('fill', d => { const i = stateData[d.properties.name]; return i ? tierColor[i.tier] : '#b4b2a9'; })
     .attr('cursor', 'pointer')
     .on('mouseenter', function(event, d) {
-      if (locked) return;
       const name = d.properties.name;
       if (!populateTooltip(name)) return;
       d3.select(this).attr('opacity', 0.75);
       const c = centroids[name];
       if (c) { const cl = svgCentroidToClient(c[0], c[1]); positionTooltip(cl.x, cl.y); }
     })
-    .on('mouseleave', function(event, d) {
-      if (locked) return;
+    .on('mouseleave', function() {
       d3.select(this).attr('opacity', 1);
       tt.style.display = 'none';
-    })
-    .on('click', function(event, d) {
-      const name = d.properties.name;
-      if (locked && lockedState === name) {
-        locked = false;
-        lockedState = null;
-        tt.classList.remove('locked');
-        tt.style.display = 'none';
-        d3.selectAll('path').attr('opacity', 1);
-      } else {
-        locked = true;
-        lockedState = name;
-        d3.selectAll('path').attr('opacity', 1);
-        d3.select(this).attr('opacity', 0.75);
-        if (!populateTooltip(name)) return;
-        tt.classList.add('locked');
-        const c = centroids[name];
-        if (c) { const cl = svgCentroidToClient(c[0], c[1]); positionTooltip(cl.x, cl.y); }
-      }
-      event.stopPropagation();
     });
 
   svg.selectAll('text.lbl')
