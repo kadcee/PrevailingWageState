@@ -72,6 +72,7 @@
 
 <div class="legend">
   <span class="legend-item"><span class="legend-swatch" style="background:#a32d2d;"></span>Comprehensive state law</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#c96b6b;"></span>Comprehensive state law (Honeywell covered)</span>
   <span class="legend-item"><span class="legend-swatch" style="background:#e88c2a;"></span>Limited or narrow law</span>
   <span class="legend-item"><span class="legend-swatch" style="background:#b4b2a9;"></span>No state law (federal only)</span>
 </div>
@@ -109,7 +110,7 @@ const stateData = {
   "Arizona":{ tier:"none", abbr:"AZ", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Arkansas":{ tier:"none", abbr:"AR", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "California":{ tier:"comprehensive", abbr:"CA", law:"CA Prevailing Wage Law (Labor Code §1720+)", agency:"CA Dept. of Industrial Relations (DIR)", covered:"Public works construction & maintenance", threshold:"$1,000+ construction; $25,000+ alterations", url:"https://www.dir.ca.gov/Public-Works/PublicWorks.html" },
-  "Colorado":{ tier:"comprehensive", abbr:"CO", law:"CO SB19-196 (prevailing wage) as amended by SB21-087", agency:"CO Office of the State Architect", covered:"State-funded construction projects (LDBA)", threshold:"$500,000 state-funded public works (CDOT projects subject to Davis-Bacon regardless of amount)", url:"https://osa.colorado.gov/state-buildings/prevailing-wage-and-apprenticeship" },
+  "Colorado":{ tier:"comprehensive", abbr:"CO", law:"Colorado Labor Peace Act / SB21-087", agency:"CO Office of the State Architect", covered:"State-funded construction projects (LDBA)", threshold:"$500,000 state-funded public works (CDOT projects subject to Davis-Bacon regardless of amount)", url:"https://osa.colorado.gov/state-buildings/prevailing-wage-and-apprenticeship" },
   "Connecticut":{ tier:"comprehensive", abbr:"CT", law:"Connecticut Prevailing Wage Act (CGS §31-53)", agency:"CT Dept. of Labor", covered:"Public works construction", threshold:"$1M+ new; $100K+ renovation", url:"https://portal.ct.gov/" },
   "Delaware":{ tier:"comprehensive", abbr:"DE", law:"Delaware Prevailing Wage Law (Title 29 Ch. 69)", agency:"DE Dept. of Labor", covered:"Public works construction", threshold:"$500,000+ new construction; $45,000+ alteration/repair/renovation/demolition", url:"https://labor.delaware.gov/divisions/industrial-affairs/prevailing-wage/" },
   "Florida":{ tier:"limited", abbr:"FL", law:"No state prevailing wage law except for Miami-Dade County (MDC)", agency:"Federal DOL (WHD) / Miami-Dade Board of County Commissioners", covered:"Federal contracts/Miami-Dade Responsible Wages & Benefits", threshold:"Federal thresholds apply/$100,000+(MDC)", url:"https://www.miamidade.gov/global/strategic-procurement/responsible-wages-benefits.page" },
@@ -125,7 +126,7 @@ const stateData = {
   "Maine":{ tier:"comprehensive", abbr:"ME", law:"Maine Prevailing Wage Law (26 MRS §1301+)", agency:"ME Dept. of Labor", covered:"State highway and public building construction", threshold:"$50,000+", url:"https://www.maine.gov/labor/labor_stats/publications/wagerateconst/index.shtml" },
   "Maryland":{ tier:"comprehensive", abbr:"MD", law:"Maryland Prevailing Wage Law (Art. §17-201+)", agency:"MD Dept. of Labor", covered:"Public school construction; state contracts", threshold:"$250,000+ where State funds project or 25%+ of funding is State", url:"https://www.labor.maryland.gov/labor/prev/" },
   "Massachusetts":{ tier:"comprehensive", abbr:"MA", law:"Massachusetts Prevailing Wage Act (MGL Ch. 149)", agency:"MA Dept. of Labor Standards", covered:"Public works construction and maintenance", threshold:"All public agency construction contracts", url:"https://www.mass.gov/prevailing-wage-program" },
-  "Michigan":{ tier:"comprehensive", abbr:"MI", law:"Prevailing Wage on State Projects Act (Act 10 of 2023)", agency:"MI Dept. of Labor & Economic Opportunity", covered:"State-funded construction", threshold:"State-funded public works", url:"https://www.michigan.gov/leo/bureaus-agencies/ber/wage-and-hour/prevailing-wage" },
+  "Michigan":{ tier:"comprehensive", abbr:"MI", law:"Michigan Prevailing Wage Act", agency:"MI Dept. of Labor & Economic Opportunity", covered:"State-funded construction", threshold:"State-funded public works", url:"https://www.michigan.gov/leo/bureaus-agencies/ber/wage-and-hour/prevailing-wage" },
   "Minnesota":{ tier:"comprehensive", abbr:"MN", law:"Minnesota Prevailing Wage Act (MN Stat. §177.41+)", agency:"MN Dept. of Labor & Industry", covered:"Public works construction", threshold:"All state-funded construction contracts", url:"https://www.dli.mn.gov/prevailing-wage" },
   "Mississippi":{ tier:"none", abbr:"MS", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Missouri":{ tier:"comprehensive", abbr:"MO", law:"Missouri Prevailing Wage Law (RSMo §290.210+)", agency:"MO Dept. of Labor & Industrial Relations", covered:"Public works construction", threshold:"Projects over $75,000", url:"https://labor.mo.gov/DLS/PrevailingWage" },
@@ -153,11 +154,13 @@ const stateData = {
   "Washington":{ tier:"comprehensive", abbr:"WA", law:"Washington Prevailing Wage Law (RCW Ch. 39.12)", agency:"WA Dept. of Labor & Industries (L&I)", covered:"Public works construction & maintenance", threshold:"All public works projects", url:"https://lni.wa.gov" },
   "West Virginia":{ tier:"none", abbr:"WV", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
   "Wisconsin":{ tier:"none", abbr:"WI", law:"No state prevailing wage law", agency:"Federal DOL (WHD) only", covered:"Federal contracts only", threshold:"Federal thresholds apply", url:"https://www.dol.gov/agencies/whd" },
-  "Wyoming":{ tier:"comprehensive", abbr:"WY", law:"Wyoming Prevailing Wage Law", agency:"WY Dept. of Workforce Services", covered:"Public works construction", threshold:"$100,000+", url:"https://wyomingworkforce.org/" },
+  "Wyoming":{ tier:"limited", abbr:"WY", law:"Wyoming Prevailing Wage Act of 1967 (W.S. §27-4-401+)", agency:"WY Dept. of Workforce Services", covered:"State-contracted public works construction only (where prevailing wage is a contract requirement)", threshold:"$25,000+ (per statute); NOTE: No active statewide mandate — law applies only where contract specifically requires it. Wyoming has no comprehensive statewide prevailing wage requirement for state- or locally-funded projects. Federal Davis-Bacon governs federally funded work.", url:"https://wyomingworkforce.org/" },
   "Washington, DC":{ tier:"comprehensive", abbr:"DC", law:"DC Living Wage Act / Davis-Bacon applies to all federal contracts", agency:"DC Dept. of Employment Services (DOES)", covered:"Public works construction; DC government contracts $100,000+", threshold:"$100,000+ (DC contracts); $2,000+ (federal Davis-Bacon)", url:"https://www.dol.gov/agencies/whd" }
 };
 
 const tierColor = { comprehensive:"#a32d2d", limited:"#e88c2a", none:"#b4b2a9" };
+const honeywellStateNames = new Set(["California","Nevada","Washington","Michigan","New York","New Jersey","Minnesota","Massachusetts","Colorado"]);
+const honeywellMapColor = "#2d7a3a";
 const tierLabel = { comprehensive:"Comprehensive state law", limited:"Limited/narrow state law", none:"No state law — federal only" };
 const tierBg   = { comprehensive:"#fcebeb", limited:"#faeeda", none:"#f1efe8" };
 const tierText = { comprehensive:"#791f1f", limited:"#633806", none:"#444441" };
@@ -249,7 +252,7 @@ d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
     .attr('d', geoPath)
     .attr('stroke', '#fff')
     .attr('stroke-width', 0.7)
-    .attr('fill', d => { const i = stateData[d.properties.name]; return i ? tierColor[i.tier] : '#b4b2a9'; })
+    .attr('fill', d => { const n = d.properties.name; const i = stateData[n]; if (!i) return '#b4b2a9'; return (honeywellStateNames.has(n) && i.tier === 'comprehensive') ? honeywellMapColor : tierColor[i.tier]; })
     .attr('cursor', 'pointer')
     .on('mouseenter', function(event, d) {
       if (locked) return;
