@@ -46,10 +46,10 @@
     padding: 5px 8px;
     border-radius: 4px;
     background: #fff3e0;
-    border: 0.5px solid #e88c2a;
+    border: 0.5px solid #e8a455;
     font-size: 11px;
     font-weight: 500;
-    color: #633806;
+    color: #7a5230;
   }
   #tt-lock-hint {
     margin-top: 8px;
@@ -59,9 +59,9 @@
   }
   #tooltip.locked {
     pointer-events: auto;
-    border-color: #a32d2d;
+    border-color: #b85555;
   }
-  #tooltip.locked #tt-lock-hint { color: #a32d2d; }
+  #tooltip.locked #tt-lock-hint { color: #b85555; }
   .footer-note { font-size: 11px; color: #999; margin-top: 1rem; }
 </style>
 </head>
@@ -71,9 +71,9 @@
 <p class="subtitle">Hover over any state to view its prevailing wage law summary. Coverage refers to state-level requirements independent of federal DBA/SCA.</p>
 
 <div class="legend">
-  <span class="legend-item"><span class="legend-swatch" style="background:#a32d2d;"></span>Comprehensive state law</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#c96b6b;"></span>Comprehensive state law (Honeywell covered)</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#e88c2a;"></span>Limited or narrow law</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#b85555;"></span>Comprehensive state law</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#2d7a3a;"></span>Comprehensive state law (Honeywell covered)</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#e8a455;"></span>Limited or narrow law</span>
   <span class="legend-item"><span class="legend-swatch" style="background:#b4b2a9;"></span>No state law (federal only)</span>
 </div>
 
@@ -158,12 +158,12 @@ const stateData = {
   "Washington, DC":{ tier:"comprehensive", abbr:"DC", law:"DC Living Wage Act / Davis-Bacon applies to all federal contracts", agency:"DC Dept. of Employment Services (DOES)", covered:"Public works construction; DC government contracts $100,000+", threshold:"$100,000+ (DC contracts); $2,000+ (federal Davis-Bacon)", url:"https://www.dol.gov/agencies/whd" }
 };
 
-const tierColor = { comprehensive:"#a32d2d", limited:"#e88c2a", none:"#b4b2a9" };
+const tierColor = { comprehensive:"#b85555", limited:"#e8a455", none:"#b4b2a9" };
 const honeywellStateNames = new Set(["California","Nevada","Washington","Michigan","New York","New Jersey","Minnesota","Massachusetts","Colorado"]);
-const honeywellMapColor = "#0a714e";
+const honeywellMapColor = "#2d7a3a";
 const tierLabel = { comprehensive:"Comprehensive state law", limited:"Limited/narrow state law", none:"No state law — federal only" };
 const tierBg   = { comprehensive:"#fcebeb", limited:"#faeeda", none:"#f1efe8" };
-const tierText = { comprehensive:"#791f1f", limited:"#633806", none:"#444441" };
+const tierText = { comprehensive:"#8c3a3a", limited:"#7a5230", none:"#444441" };
 
 const tt         = document.getElementById('tooltip');
 const ttState    = document.getElementById('tt-state');
@@ -211,7 +211,7 @@ function populateTooltip(name) {
     <span>Agency</span><span>${info.agency}</span>
     <span>Covered work</span><span>${info.covered}</span>
     <span>Threshold</span><span>${info.threshold}</span>
-    <span>Source</span><span><a href="${info.url}" target="_blank" style="color:#a32d2d;text-decoration:underline;">${info.url.replace('https://','')}</a></span>
+    <span>Source</span><span><a href="${info.url}" target="_blank" style="color:#b85555;text-decoration:underline;">${info.url.replace('https://','')}</a></span>
   `;
   const hw = honeywellNote[name];
   ttHoney.style.display = hw ? 'block' : 'none';
@@ -333,16 +333,16 @@ d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
     dcG.append('line')
       .attr('x1', dcX).attr('y1', dcY)
       .attr('x2', boxX).attr('y2', boxY)
-      .attr('stroke', '#a32d2d').attr('stroke-width', 0.8);
+      .attr('stroke', '#b85555').attr('stroke-width', 0.8);
 
     dcG.append('circle')
       .attr('cx', dcX).attr('cy', dcY).attr('r', 4)
-      .attr('fill', '#a32d2d').attr('stroke','#fff').attr('stroke-width',0.8);
+      .attr('fill', '#b85555').attr('stroke','#fff').attr('stroke-width',0.8);
 
     const dcRect = dcG.append('rect')
       .attr('x', boxX - 10).attr('y', boxY - 8)
       .attr('width', 22).attr('height', 14).attr('rx', 3)
-      .attr('fill', '#a32d2d');
+      .attr('fill', '#b85555');
 
     dcG.append('text')
       .attr('x', boxX + 1).attr('y', boxY + 1)
