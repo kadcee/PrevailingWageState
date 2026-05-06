@@ -46,7 +46,7 @@
     padding: 5px 8px;
     border-radius: 4px;
     background: #fff3e0;
-    border: 0.5px solid #ffc099;
+    border: 0.5px solid #ffa51f;
     font-size: 11px;
     font-weight: 500;
     color: #a06030;
@@ -72,8 +72,8 @@
 
 <div class="legend">
   <span class="legend-item"><span class="legend-swatch" style="background:#cc4e00;"></span>Comprehensive state law</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#10bb82;"></span>Comprehensive state law (Honeywell covered)</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#ffc099;"></span>Limited or narrow law</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#457a00;"></span>Comprehensive state law (Honeywell covered)</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#ffa51f;"></span>Limited or narrow law</span>
   <span class="legend-item"><span class="legend-swatch" style="background:#b4b2a9;"></span>No state law (federal only)</span>
 </div>
 
@@ -158,9 +158,9 @@ const stateData = {
   "Washington, DC":{ tier:"comprehensive", abbr:"DC", law:"DC Living Wage Act / Davis-Bacon applies to all federal contracts", agency:"DC Dept. of Employment Services (DOES)", covered:"Public works construction; DC government contracts $100,000+", threshold:"$100,000+ (DC contracts); $2,000+ (federal Davis-Bacon)", url:"https://www.dol.gov/agencies/whd" }
 };
 
-const tierColor = { comprehensive:"#cc4e00", limited:"#ffc099", none:"#b4b2a9" };
+const tierColor = { comprehensive:"#cc4e00", limited:"#ffa51f", none:"#b4b2a9" };
 const honeywellStateNames = new Set(["California","Nevada","Washington","Michigan","New York","New Jersey","Minnesota","Massachusetts","Colorado"]);
-const honeywellMapColor = "#10bb82";
+const honeywellMapColor = "#457a00";
 const tierLabel = { comprehensive:"Comprehensive state law", limited:"Limited/narrow state law", none:"No state law — federal only" };
 const tierBg   = { comprehensive:"#fcebeb", limited:"#faeeda", none:"#f1efe8" };
 const tierText = { comprehensive:"#cc4e00", limited:"#a06030", none:"#444441" };
